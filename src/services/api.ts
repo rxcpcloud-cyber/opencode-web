@@ -60,9 +60,10 @@ const apiRequest = async <T>(
 }
 
 // Session Management
-export const createSession = async (): Promise<Session> => {
+export const createSession = async (options?: { parentID?: string; title?: string }): Promise<Session> => {
   return apiRequest<Session>('/session', {
-    method: 'POST'
+    method: 'POST',
+    body: options ? JSON.stringify(options) : JSON.stringify({})
   })
 }
 
