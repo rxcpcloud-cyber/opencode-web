@@ -1,0 +1,15 @@
+FROM oven/bun:latest
+
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+RUN bun install -g opencode-ai
+
+WORKDIR /workspace
+
+ENV HOST=0.0.0.0
+ENV PORT=4096
+
+EXPOSE 4096
+
+# For server logs, add: "--log-level INFO --print-logs true"
+CMD ["sh", "-c", "opencode serve --hostname $HOST --port $PORT"]
