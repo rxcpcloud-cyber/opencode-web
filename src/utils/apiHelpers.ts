@@ -54,6 +54,11 @@ const generateId = (): string => {
   return crypto.randomUUID()
 }
 
+// Message ID generation with required prefix
+const generateMessageId = (): string => {
+  return `msg_${crypto.randomUUID()}`
+}
+
 // Message creation helpers
 export const createTextMessageRequest = (
   text: string,
@@ -62,7 +67,7 @@ export const createTextMessageRequest = (
   modelID: string = DEFAULT_SETTINGS.MODEL,
   mode: string = 'build'
 ): SendMessageRequest => {
-  const messageID = generateId()
+  const messageID = generateMessageId()
   return {
     messageID,
     providerID,
@@ -86,7 +91,7 @@ export const createFileMessageRequest = (
   modelID: string = DEFAULT_SETTINGS.MODEL,
   mode: string = 'build'
 ): SendMessageRequest => {
-  const messageID = generateId()
+  const messageID = generateMessageId()
   return {
     messageID,
     providerID,
@@ -109,7 +114,7 @@ export const createMixedMessageRequest = (
   modelID: string = DEFAULT_SETTINGS.MODEL,
   mode: string = 'build'
 ): SendMessageRequest => ({
-  messageID: generateId(),
+  messageID: generateMessageId(),
   providerID,
   modelID,
   mode,
