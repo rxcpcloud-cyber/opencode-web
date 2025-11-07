@@ -1,0 +1,31 @@
+services:
+  opencode:
+    build:
+      context: .
+      dockerfile: Dockerfile.opencode
+    environment:
+      - HOST=0.0.0.0
+      - PORT=4096
+    working_dir: /workspace
+    # volumes:
+    #  # Mount to a project folder
+    #   - .:/workspace
+    #  # Optionally you can mount the opencode files to your system
+    #   - ./opencode-data:/home/opencode/.local/share/opencode
+    #   - ./opencode-config:/home/opencode/.config/opencode
+    #   - ./opencode-state:/home/opencode/.local/state/opencode
+    ports:
+      - "4096:4096"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:4096
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+    depends_on:
+      - opencode
